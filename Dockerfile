@@ -14,7 +14,9 @@ RUN pip3 install --no-cache-dir --break-system-packages \
 
 WORKDIR /app
 COPY package*.json ./
-RUN npm install
+
+RUN npm install --include=dev --no-audit --no-fund --legacy-peer-deps
+
 COPY . .
 RUN npm run build
 
