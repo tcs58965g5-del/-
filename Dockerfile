@@ -15,14 +15,19 @@ RUN pip3 install --no-cache-dir --break-system-packages \
 WORKDIR /app
 COPY package*.json ./
 
-RUN npm install --include=dev --no-audit --no-fund --legacy-peer-deps
+RUN rm -rf node_modules package-lock.json && \
+    npm install --include=dev --no-audit --no-fund --legacy-peer-deps && \
+    npm install -g vite && \
+    npm install vite @vitejs/plugin-react @tailwindcss/vite --save-dev --no-audit --no-fund --legacy-peer-deps
 
 COPY . .
-RUN npm run build
+
+RUN npx vite build && npx esbuild server.ts --bundle --platform=node --format=cjs --packages=external --sourcemap --outfile=dist/server.cjs
 
 ENV NODE_ENV=production
 ENV PORT=5000
 ENV CHROMIUM_PATH=/usr/bin/chromium
+ENV PUPPETEER_SKIP_DOWNLOAD=true
 
 EXPOSE 5000
 CMD ["node", "dist/server.cjs"]
