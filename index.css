@@ -1,0 +1,570 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Cairo:wght@300;400;500;600;700;850&family=Tajawal:wght@300;400;500;700;900&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Cairo", "Tajawal", "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+}
+
+@variant dark (&:where(.dark, .dark *));
+
+:root {
+  --bg: #f4f6f9;
+  --ink: #0f172a;
+  --line: rgba(255, 255, 255, 0.4);
+  --accent: #10b981;
+}
+
+body {
+  background-color: #f3f5f8 !important;
+  color: var(--ink);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  position: relative;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* Apple-style floating background orbs */
+body::before, body::after {
+  content: '';
+  position: fixed;
+  width: 50vw;
+  height: 50vw;
+  min-width: 350px;
+  min-height: 350px;
+  border-radius: 50%;
+  filter: blur(120px);
+  z-index: -2;
+  pointer-events: none;
+  opacity: 0.75;
+}
+
+body::before {
+  top: -10%;
+  right: -5%;
+  background: radial-gradient(circle, rgba(16, 185, 129, 0.28) 0%, rgba(5, 150, 105, 0.1) 50%, rgba(255,255,255,0) 70%);
+  animation: floatOrbRight 25s ease-in-out infinite alternate;
+}
+
+body::after {
+  bottom: -10%;
+  left: -5%;
+  background: radial-gradient(circle, rgba(14, 165, 233, 0.26) 0%, rgba(79, 70, 229, 0.08) 50%, rgba(255,255,255,0) 70%);
+  animation: floatOrbLeft 30s ease-in-out infinite alternate;
+}
+
+@keyframes floatOrbRight {
+  0% { transform: translate(0, 0) scale(1) rotate(0deg); }
+  50% { transform: translate(-5%, 8%) scale(1.1) rotate(60deg); }
+  100% { transform: translate(5%, -5%) scale(0.9) rotate(120deg); }
+}
+
+@keyframes floatOrbLeft {
+  0% { transform: translate(0, 0) scale(1) rotate(0deg); }
+  50% { transform: translate(8%, -5%) scale(1.15) rotate(-45deg); }
+  100% { transform: translate(-3%, 4%) scale(0.95) rotate(-90deg); }
+}
+
+/* Premium IOS Glass Classes */
+.ios-glass-nav {
+  background-color: rgba(255, 255, 255, 0.7) !important;
+  backdrop-filter: blur(25px) saturate(210%) !important;
+  -webkit-backdrop-filter: blur(25px) saturate(210%) !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.5) !important;
+}
+
+.ios-glass-card {
+  background-color: rgba(255, 255, 255, 0.75) !important;
+  backdrop-filter: blur(30px) saturate(190%) !important;
+  -webkit-backdrop-filter: blur(30px) saturate(190%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.65) !important;
+  box-shadow: 0 10px 30px -5px rgba(15, 23, 42, 0.08), 
+              0 4px 12px -3px rgba(15, 23, 42, 0.04), 
+              0 1px 3px rgba(255, 255, 255, 0.6) inset !important;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.ios-glass-card-hover:hover {
+  background-color: rgba(255, 255, 255, 0.85) !important;
+  transform: translateY(-4px) scale(1.008);
+  box-shadow: 0 20px 45px -10px rgba(15, 23, 42, 0.12), 
+              0 8px 18px -4px rgba(15, 23, 42, 0.06), 
+              0 1px 5px rgba(255, 255, 255, 0.8) inset !important;
+}
+
+.ios-glass-inner {
+  background-color: rgba(255, 255, 255, 0.45) !important;
+  backdrop-filter: blur(10px) saturate(150%) !important;
+  -webkit-backdrop-filter: blur(10px) saturate(150%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.45) !important;
+  box-shadow: 0 2px 8px -2px rgba(15, 23, 42, 0.03) !important;
+}
+
+.ios-glass-input {
+  background-color: #ffffff !important;
+  border: 1.5px solid rgba(15, 23, 42, 0.15) !important;
+  box-shadow: inset 0 2px 4px rgba(15, 23, 42, 0.03), 0 1px 2px rgba(0, 0, 0, 0.02) !important;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.ios-glass-input:focus {
+  background-color: #ffffff !important;
+  border-color: rgba(var(--input-primary-rgb, 16, 185, 129), 0.6) !important;
+  box-shadow: 0 4px 12px -2px rgba(var(--input-primary-rgb, 16, 185, 129), 0.08), 
+              0 0 0 4px rgba(var(--input-primary-rgb, 16, 185, 129), 0.15) !important;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(15, 23, 42, 0.12);
+  border-radius: 10px;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(15, 23, 42, 0.25);
+  border: 2px solid transparent;
+  background-clip: padding-box;
+}
+
+.data-grid-header {
+  display: grid;
+  padding: 0.9rem 1.5rem;
+  background: rgba(255, 255, 255, 0.45);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+  font-weight: 700;
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #475569;
+}
+
+.data-grid-row {
+  display: grid;
+  padding: 1.1rem 1.5rem;
+  border-bottom: 1px solid rgba(15, 23, 42, 0.04);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  background: rgba(255, 255, 255, 0.5);
+  align-items: center;
+}
+
+.data-grid-row:hover {
+  background: rgba(255, 255, 255, 0.85);
+  transform: translateY(-1.5px);
+  box-shadow: 0 8px 20px -6px rgba(15, 23, 42, 0.05);
+  border-color: rgba(16, 185, 129, 0.15);
+}
+
+.input-minimal {
+  @apply w-full bg-transparent border-none focus:outline-none focus:ring-0 p-0 text-base md:text-sm;
+}
+
+.status-badge {
+  @apply inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider;
+}
+
+/* Grid Definition */
+.visa-grid-layout {
+  grid-template-columns: 42px minmax(105px, 1.2fr) minmax(160px, 2fr) minmax(105px, 1.2fr) minmax(85px, 1fr) minmax(85px, 1fr) minmax(85px, 1fr) minmax(135px, 1.5fr) minmax(105px, 1.2fr) 100px;
+}
+
+[dir="rtl"] .visa-grid-layout {
+  grid-template-columns: 42px minmax(105px, 1.2fr) minmax(160px, 2fr) minmax(105px, 1.2fr) minmax(85px, 1fr) minmax(85px, 1fr) minmax(85px, 1fr) minmax(135px, 1.5fr) minmax(105px, 1.2fr) 100px;
+}
+
+
+/* ==================== DARK MODE OVERRIDES ==================== */
+html.dark {
+  --bg: #090d16;
+  --ink: #f8fafc;
+
+  /* Redefine Tailwind v4 default colors for automatic theme-swapping, including borders, texts, hovers, and transparent colors */
+  --color-white: #111827;
+  --color-slate-50: #0a0f1d;
+  --color-slate-100: #12192c;
+  --color-slate-200: #1e293b;
+  --color-slate-300: #334155;
+  --color-slate-400: #475569;
+  --color-slate-500: #64748b;
+  --color-slate-600: #94a3b8;
+  --color-slate-700: #cbd5e1;
+  --color-slate-800: #e2e8f0;
+  --color-slate-900: #f1f5f9;
+  --color-slate-950: #f8fafc;
+
+  --color-zinc-50: #0a0f1d;
+  --color-zinc-100: #12192c;
+  --color-zinc-200: #1e293b;
+  --color-zinc-800: #e2e8f0;
+  --color-zinc-900: #f1f5f9;
+
+  --color-gray-50: #0a0f1d;
+  --color-gray-100: #12192c;
+  --color-gray-200: #1e293b;
+  --color-gray-800: #e2e8f0;
+  --color-gray-900: #f1f5f9;
+}
+
+html.dark body {
+  background-color: #090d16 !important;
+  color: var(--ink);
+}
+
+/* Float orbs for dark mode - ultra modern midnight feel */
+html.dark body::before {
+  background: radial-gradient(circle, rgba(16, 185, 129, 0.12) 0%, rgba(5, 150, 105, 0.03) 50%, rgba(0, 0, 0, 0) 70%);
+}
+
+html.dark body::after {
+  background: radial-gradient(circle, rgba(14, 165, 233, 0.1) 0%, rgba(79, 70, 229, 0.02) 50%, rgba(0, 0, 0, 0) 70%);
+}
+
+/* Glass components for dark mode */
+html.dark .ios-glass-nav {
+  background-color: rgba(9, 13, 22, 0.82) !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07) !important;
+}
+
+html.dark .ios-glass-card {
+  background-color: rgba(17, 24, 39, 0.65) !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.65), 
+              0 1px 2px rgba(255, 255, 255, 0.04) inset !important;
+}
+
+html.dark .ios-glass-card-hover:hover {
+  background-color: rgba(22, 31, 50, 0.72) !important;
+  border-color: rgba(255, 255, 255, 0.12) !important;
+  box-shadow: 0 35px 70px -10px rgba(0, 0, 0, 0.75), 
+              0 1px 4px rgba(255, 255, 255, 0.06) inset !important;
+}
+
+html.dark .ios-glass-inner {
+  background-color: rgba(255, 255, 255, 0.03) !important;
+  border: 1px solid rgba(255, 255, 255, 0.06) !important;
+}
+
+.dark .ios-glass-input,
+html.dark .ios-glass-input {
+  background-color: #0b111e !important;
+  border: 1.5px solid rgba(255, 255, 255, 0.18) !important;
+  color: #f8fafc !important;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.35) !important;
+}
+
+.dark .ios-glass-input:focus,
+html.dark .ios-glass-input:focus {
+  background-color: #0f172a !important;
+  border-color: rgba(var(--input-primary-rgb, 16, 185, 129), 0.6) !important;
+  box-shadow: 0 4px 12px -2px rgba(var(--input-primary-rgb, 16, 185, 129), 0.15), 
+              0 0 0 4px rgba(var(--input-primary-rgb, 16, 185, 129), 0.22) !important;
+}
+
+/* Data Table grid elements for dark mode */
+html.dark .data-grid-header {
+  background: rgba(15, 23, 42, 0.7) !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+  color: #94a3b8 !important;
+}
+
+html.dark .data-grid-row {
+  background: rgba(15, 23, 42, 0.45) !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05) !important;
+  color: #e2e8f0 !important;
+}
+
+html.dark .data-grid-row:hover {
+  background: rgba(15, 23, 42, 0.75) !important;
+  box-shadow: 0 12px 30px -8px rgba(0, 0, 0, 0.5) !important;
+  border-color: rgba(16, 185, 129, 0.3) !important;
+}
+
+html.dark ::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.12);
+}
+
+html.dark ::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.22);
+}
+
+/* ==================== GLOBAL UTILITY ADAPTATIONS ==================== */
+/* Text adjustments for high readability in dark mode */
+html.dark .text-slate-950,
+html.dark .text-slate-900 {
+  color: #f8fafc !important;
+}
+
+html.dark .text-slate-800,
+html.dark .text-slate-700 {
+  color: #e2e8f0 !important;
+}
+
+html.dark .text-slate-600,
+html.dark .text-slate-500 {
+  color: #94a3b8 !important;
+}
+
+html.dark .text-slate-400 {
+  color: #64748b !important;
+}
+
+/* Background conversions */
+.dark .bg-white,
+html.dark .bg-white {
+  background-color: #111827 !important;
+}
+
+.dark .bg-slate-50,
+html.dark .bg-slate-50 {
+  background-color: #0b1329 !important;
+}
+
+.dark .bg-slate-100,
+html.dark .bg-slate-100 {
+  background-color: #172033 !important;
+}
+
+.dark .bg-slate-200,
+html.dark .bg-slate-200 {
+  background-color: #1f2a40 !important;
+}
+
+.dark .bg-zinc-50,
+html.dark .bg-zinc-50,
+.dark .bg-gray-50,
+html.dark .bg-gray-50 {
+  background-color: #0b1329 !important;
+}
+
+.dark .bg-zinc-100,
+html.dark .bg-zinc-100,
+.dark .bg-gray-100,
+html.dark .bg-gray-100 {
+  background-color: #172033 !important;
+}
+
+/* Hover conversions for dark mode */
+.dark .bg-slate-50:hover,
+html.dark .bg-slate-50:hover,
+.dark .hover\:bg-slate-50:hover,
+html.dark .hover\:bg-slate-50:hover {
+  background-color: #121c35 !important;
+}
+
+.dark .bg-slate-100:hover,
+html.dark .bg-slate-100:hover,
+.dark .hover\:bg-slate-100:hover,
+html.dark .hover\:bg-slate-100:hover,
+.dark .hover\:bg-slate-100\/50:hover,
+html.dark .hover\:bg-slate-100\/50:hover {
+  background-color: #1a253f !important;
+}
+
+.dark .bg-white:hover,
+html.dark .bg-white:hover,
+.dark .hover\:bg-white:hover,
+html.dark .hover\:bg-white:hover {
+  background-color: #162035 !important;
+}
+
+/* Translucent / Opacity Conversions for dark mode */
+.dark .bg-slate-50\/70,
+html.dark .bg-slate-50\/70,
+.dark .bg-slate-50\/40,
+html.dark .bg-slate-50\/40,
+.dark .bg-slate-50\/50,
+html.dark .bg-slate-50\/50 {
+  background-color: rgba(11, 19, 41, 0.6) !important;
+}
+
+.dark .bg-slate-100\/50,
+html.dark .bg-slate-100\/50,
+.dark .bg-slate-100\/80,
+html.dark .bg-slate-100\/80 {
+  background-color: rgba(23, 32, 51, 0.6) !important;
+}
+
+/* Light / Pastel / Tint Card & Badge Backgrounds mapping */
+.dark .bg-indigo-50, html.dark .bg-indigo-50,
+.dark .bg-indigo-50\/50, html.dark .bg-indigo-50\/50 {
+  background-color: rgba(99, 102, 241, 0.08) !important;
+}
+.dark .bg-indigo-100, html.dark .bg-indigo-100 {
+  background-color: rgba(99, 102, 241, 0.16) !important;
+}
+
+.dark .bg-violet-50, html.dark .bg-violet-50,
+.dark .bg-violet-50\/50, html.dark .bg-violet-50\/50 {
+  background-color: rgba(139, 92, 246, 0.08) !important;
+}
+.dark .bg-violet-100, html.dark .bg-violet-100 {
+  background-color: rgba(139, 92, 246, 0.16) !important;
+}
+
+.dark .bg-emerald-50, html.dark .bg-emerald-50,
+.dark .bg-emerald-50\/50, html.dark .bg-emerald-50\/50 {
+  background-color: rgba(16, 185, 129, 0.08) !important;
+}
+.dark .bg-emerald-100, html.dark .bg-emerald-100 {
+  background-color: rgba(16, 185, 129, 0.16) !important;
+}
+
+.dark .bg-sky-50, html.dark .bg-sky-50,
+.dark .bg-sky-50\/50, html.dark .bg-sky-50\/50 {
+  background-color: rgba(14, 165, 233, 0.08) !important;
+}
+.dark .bg-sky-100, html.dark .bg-sky-100 {
+  background-color: rgba(14, 165, 233, 0.16) !important;
+}
+
+.dark .bg-blue-50, html.dark .bg-blue-50,
+.dark .bg-blue-50\/50, html.dark .bg-blue-50\/50 {
+  background-color: rgba(59, 130, 246, 0.08) !important;
+}
+.dark .bg-blue-100, html.dark .bg-blue-100 {
+  background-color: rgba(59, 130, 246, 0.16) !important;
+}
+
+.dark .bg-teal-50, html.dark .bg-teal-50,
+.dark .bg-teal-50\/50, html.dark .bg-teal-50\/50 {
+  background-color: rgba(20, 184, 166, 0.08) !important;
+}
+.dark .bg-teal-100, html.dark .bg-teal-100 {
+  background-color: rgba(20, 184, 166, 0.16) !important;
+}
+
+.dark .bg-amber-50, html.dark .bg-amber-50,
+.dark .bg-amber-50\/50, html.dark .bg-amber-50\/50 {
+  background-color: rgba(245, 158, 11, 0.08) !important;
+}
+.dark .bg-amber-100, html.dark .bg-amber-100 {
+  background-color: rgba(245, 158, 11, 0.16) !important;
+}
+
+.dark .bg-orange-50, html.dark .bg-orange-50,
+.dark .bg-orange-50\/50, html.dark .bg-orange-50\/50 {
+  background-color: rgba(249, 115, 22, 0.08) !important;
+}
+.dark .bg-orange-100, html.dark .bg-orange-100 {
+  background-color: rgba(249, 115, 22, 0.16) !important;
+}
+
+.dark .bg-rose-50, html.dark .bg-rose-50,
+.dark .bg-rose-50\/50, html.dark .bg-rose-50\/50 {
+  background-color: rgba(244, 63, 94, 0.08) !important;
+}
+.dark .bg-rose-100, html.dark .bg-rose-100 {
+  background-color: rgba(244, 63, 94, 0.16) !important;
+}
+
+.dark .bg-red-50, html.dark .bg-red-50,
+.dark .bg-red-50\/50, html.dark .bg-red-50\/50 {
+  background-color: rgba(239, 68, 68, 0.08) !important;
+}
+.dark .bg-red-100, html.dark .bg-red-100 {
+  background-color: rgba(239, 68, 68, 0.16) !important;
+}
+
+/* Double square-bracket styling elements */
+.dark .bg-\[\#EEF2FF\],
+html.dark .bg-\[\#EEF2FF\],
+.dark [class*="bg-[#EEF2FF]"],
+html.dark [class*="bg-[#EEF2FF]"] {
+  background-color: rgba(99, 102, 241, 0.08) !important;
+}
+
+/* Border adjustments */
+.dark .border-slate-100, html.dark .border-slate-100,
+.dark .border-slate-200, html.dark .border-slate-200,
+.dark .border-slate-300, html.dark .border-slate-300,
+.dark .border-white, html.dark .border-white,
+.dark .border-white\/10, html.dark .border-white\/10,
+.dark .border-white\/20, html.dark .border-white\/20,
+.dark .border-white\/30, html.dark .border-white\/30 {
+  border-color: rgba(255, 255, 255, 0.08) !important;
+}
+
+.dark .border-sky-100, html.dark .border-sky-100,
+.dark .border-teal-100, html.dark .border-teal-100,
+.dark .border-violet-100, html.dark .border-violet-100,
+.dark .border-amber-100, html.dark .border-amber-100,
+.dark .border-orange-100, html.dark .border-orange-100,
+.dark .border-indigo-100, html.dark .border-indigo-100,
+.dark .border-emerald-100, html.dark .border-emerald-100,
+.dark .border-rose-100, html.dark .border-rose-100,
+.dark .border-sky-200, html.dark .border-sky-200,
+.dark .border-teal-200, html.dark .border-teal-200,
+.dark .border-violet-200, html.dark .border-violet-200,
+.dark .border-amber-200, html.dark .border-amber-200,
+.dark .border-orange-200, html.dark .border-orange-200,
+.dark .border-indigo-200, html.dark .border-indigo-200,
+.dark .border-amber-200\/80, html.dark .border-amber-200\/80,
+.dark .border-emerald-200\/80, html.dark .border-emerald-200\/80,
+.dark .border-red-100, html.dark .border-red-100 {
+  border-color: rgba(255, 255, 255, 0.12) !important;
+}
+
+/* Semi-transparent white background overrides for dark mode */
+.dark .bg-white\/80, html.dark .bg-white\/80,
+.dark .bg-white\/70, html.dark .bg-white\/70,
+.dark .bg-white\/90, html.dark .bg-white\/90 {
+  background-color: rgba(17, 24, 39, 0.8) !important;
+}
+
+.dark .bg-white\/10, html.dark .bg-white\/10,
+.dark .bg-white\/20, html.dark .bg-white\/20,
+.dark .bg-white\/5, html.dark .bg-white\/5 {
+  background-color: rgba(255, 255, 255, 0.05) !important;
+}
+
+/* Shadow modifications for clean depth and distinctive boundaries in both themes */
+.shadow-sm,
+html:not(.dark) .shadow-sm {
+  box-shadow: 0 4px 10px -1px rgba(15, 23, 42, 0.05), 0 1px 3px -1px rgba(15, 23, 42, 0.03) !important;
+}
+
+.shadow, .shadow-md,
+html:not(.dark) .shadow, html:not(.dark) .shadow-md {
+  box-shadow: 0 8px 24px -4px rgba(15, 23, 42, 0.07), 0 2px 8px -2px rgba(15, 23, 42, 0.04) !important;
+}
+
+.shadow-lg,
+html:not(.dark) .shadow-lg {
+  box-shadow: 0 16px 32px -6px rgba(15, 23, 42, 0.08), 0 4px 12px -2px rgba(15, 23, 42, 0.04) !important;
+}
+
+.shadow-xl,
+html:not(.dark) .shadow-xl {
+  box-shadow: 0 22px 44px -8px rgba(15, 23, 42, 0.10), 0 8px 20px -4px rgba(15, 23, 42, 0.05) !important;
+}
+
+.shadow-2xl,
+html:not(.dark) .shadow-2xl {
+  box-shadow: 0 30px 60px -12px rgba(15, 23, 42, 0.13), 0 12px 24px -4px rgba(15, 23, 42, 0.07) !important;
+}
+
+/* Hardened yet elegant shadows for dark mode elements */
+.dark .shadow-sm, html.dark .shadow-sm {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.45) !important;
+}
+.dark .shadow, html.dark .shadow,
+.dark .shadow-md, html.dark .shadow-md {
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.55), 0 4px 12px rgba(0, 0, 0, 0.3) !important;
+}
+.dark .shadow-lg, html.dark .shadow-lg {
+  box-shadow: 0 16px 35px -8px rgba(0, 0, 0, 0.65), 0 6px 15px rgba(0, 0, 0, 0.35) !important;
+}
+.dark .shadow-xl, html.dark .shadow-xl {
+  box-shadow: 0 24px 45px -10px rgba(0, 0, 0, 0.75), 0 8px 20px rgba(0, 0, 0, 0.4) !important;
+}
+.dark .shadow-2xl, html.dark .shadow-2xl {
+  box-shadow: 0 35px 70px -12px rgba(0, 0, 0, 0.85), 0 12px 30px rgba(0, 0, 0, 0.5) !important;
+}
