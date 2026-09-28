@@ -13,16 +13,20 @@ RUN pip3 install --no-cache-dir --break-system-packages \
     ddddocr==1.5.6 onnxruntime pillow numpy
 
 WORKDIR /app
-COPY package*.json ./
 
-RUN rm -rf node_modules package-lock.json && \
-    npm install --include=dev --no-audit --no-fund --legacy-peer-deps && \
-    npm install -g vite && \
-    npm install vite @vitejs/plugin-react @tailwindcss/vite --save-dev --no-audit --no-fund --legacy-peer-deps
+# تثبيت إصدارات محددة ومتوافقة من الحزم الأساسية
+RUN npm init -y && \
+    npm install vite@^6.2.3 @vitejs/plugin-react@^5.0.4 @tailwindcss/vite@^4.1.14 typescript@~5.8.2 tsx@^4.21.0 esbuild@^0.25.0 --save-dev --no-audit --no-fund --legacy-peer-deps
+
+# تثبيت باقي الاعتماديات من package.json
+COPY package*.json ./
+RUN npm install --no-audit --no-fund --legacy-peer-deps
 
 COPY . .
 
-RUN npx vite build && npx esbuild server.ts --bundle --platform=node --format=cjs --packages=external --sourcemap --outfile=dist/server.cjs
+# بناء الواجهة والخادم
+RUN npx vite build && \
+    npx esbuild server.ts --bundle --platform=node --format=cjs --packages=external --sourcemap --outfile=dist/server.cjs
 
 ENV NODE_ENV=production
 ENV PORT=5000
