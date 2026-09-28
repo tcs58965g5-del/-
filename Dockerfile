@@ -14,17 +14,22 @@ RUN pip3 install --no-cache-dir --break-system-packages \
 
 WORKDIR /app
 
-# تثبيت إصدارات محددة ومتوافقة من الحزم الأساسية
+# 1. تثبيت إصدارات محددة ومتوافقة من أدوات البناء الأساسية
 RUN npm init -y && \
-    npm install vite@^6.2.3 @vitejs/plugin-react@^5.0.4 @tailwindcss/vite@^4.1.14 typescript@~5.8.2 tsx@^4.21.0 esbuild@^0.25.0 --save-dev --no-audit --no-fund --legacy-peer-deps
+    npm install --save-dev --no-audit --no-fund --legacy-peer-deps \
+    vite@^6.2.3 \
+    @vitejs/plugin-react@^5.0.4 \
+    @tailwindcss/vite@^4.1.14 \
+    typescript@~5.8.2 \
+    tsx@^4.21.0 \
+    esbuild@^0.25.0
 
-# تثبيت باقي الاعتماديات من package.json
+# 2. تثبيت باقي الاعتماديات من مشروعك
 COPY package*.json ./
 RUN npm install --no-audit --no-fund --legacy-peer-deps
 
+# 3. نسخ باقي الملفات وبناء المشروع
 COPY . .
-
-# بناء الواجهة والخادم
 RUN npx vite build && \
     npx esbuild server.ts --bundle --platform=node --format=cjs --packages=external --sourcemap --outfile=dist/server.cjs
 
