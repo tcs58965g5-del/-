@@ -14,24 +14,13 @@ RUN pip3 install --no-cache-dir --break-system-packages \
 
 WORKDIR /app
 
-# 1. تثبيت أدوات البناء عالمياً (لضمان وجودها في PATH)
-RUN npm install -g vite@6.2.3 esbuild@0.25.0 typescript@5.8.2 tsx@4.21.0
+COPY package.json ./
 
-# 2. نسخ وتثبيت اعتماديات المشروع
-COPY package*.json ./
-RUN npm install --no-audit --no-fund --legacy-peer-deps
-
-# 3. ضمان وجود vite محلياً أيضاً
-RUN npm install --save-dev --no-audit --no-fund --legacy-peer-deps \
-    vite@6.2.3 \
-    @vitejs/plugin-react@5.0.4 \
-    @tailwindcss/vite@4.1.14
+RUN npm install --legacy-peer-deps --no-audit --no-fund
 
 COPY . .
 
-# 4. البناء باستخدام المسار المباشر (يتجاوز مشاكل PATH)
-RUN ./node_modules/.bin/vite build && \
-    ./node_modules/.bin/esbuild server.ts --bundle --platform=node --format=cjs --packages=external --sourcemap --outfile=dist/server.cjs
+RUN npm run build
 
 ENV NODE_ENV=production
 ENV PORT=5000
